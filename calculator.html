@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <style>
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            font-family: sans-serif;
+        }
+
+        h1 {
+            color: rgba(255,255,255,0.5);
+            font-size: 14px;
+            font-weight: 400;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        #calc {
+            width: 280px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 24px;
+            border: 0.5px solid rgba(255,255,255,0.12);
+            overflow: hidden;
+        }
+
+        input#display {
+            width: 100%;
+            box-sizing: border-box;
+            background: rgba(0,0,0,0.35);
+            border: none;
+            color: #fff;
+            font-size: 36px;
+            font-weight: 400;
+            text-align: right;
+            padding: 28px 20px 20px;
+            outline: none;
+            margin: 0;
+            height: auto;
+            font-family: monospace;
+        }
+
+        input#display::placeholder { color: rgba(255,255,255,0.2); }
+
+        #buttons {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1px;
+            background: rgba(255,255,255,0.06);
+            padding: 0;
+        }
+
+        #buttons button {
+            background: rgba(255,255,255,0.04);
+            border: none;
+            font-size: 18px;
+            font-weight: 400;
+            padding: 0;
+            height: 68px;
+            cursor: pointer;
+            color: rgba(255,255,255,0.9);
+            font-family: sans-serif;
+            transition: background 0.1s, transform 0.08s;
+            outline: none;
+            width: 100%;
+        }
+
+        #buttons button:hover { background: rgba(255,255,255,0.1); }
+        #buttons button:active { transform: scale(0.93); background: rgba(255,255,255,0.15); }
+
+        /* Operator buttons: +, -, *, / */
+        .op-btn {
+            background: rgba(127,127,255,0.18) !important;
+            color: #a89cff !important;
+            font-size: 22px !important;
+        }
+        .op-btn:hover { background: rgba(127,127,255,0.28) !important; }
+
+        /* Equal button */
+        .eq-btn {
+            background: #7f5af0 !important;
+            color: #fff !important;
+            font-size: 22px !important;
+        }
+        .eq-btn:hover { background: #9470ff !important; }
+
+        /* Clear button - full width */
+        .clear-btn {
+            grid-column: span 3;
+            background: rgba(255,255,255,0.08) !important;
+            color: rgba(255,255,255,0.6) !important;
+            font-size: 15px !important;
+            height: 52px !important;
+            letter-spacing: 2px;
+        }
+        .clear-btn:hover { background: rgba(255,255,255,0.14) !important; }
+    </style>
+</head>
+<body>
+    <h1>Calculator</h1>
+
+    <div id="calc">
+        <input id="display" type="number" placeholder="0" readonly>
+
+        <div id="buttons">
+            <button onclick="appendNumber(1)">1</button>
+            <button onclick="appendNumber(2)">2</button>
+            <button onclick="appendNumber(3)">3</button>
+
+            <button onclick="appendNumber(4)">4</button>
+            <button onclick="appendNumber(5)">5</button>
+            <button onclick="appendNumber(6)">6</button>
+
+            <button onclick="appendNumber(7)">7</button>
+            <button onclick="appendNumber(8)">8</button>
+            <button onclick="appendNumber(9)">9</button>
+
+            <button onclick="appendNumber(0)">0</button>
+            <button class="op-btn" onclick="setOperator('+')">+</button>
+            <button class="op-btn" onclick="setOperator('-')">−</button>
+
+            <button class="op-btn" onclick="setOperator('*')">×</button>
+            <button class="op-btn" onclick="setOperator('/'">÷</button>
+            <button class="eq-btn" onclick="calculate()">=</button>
+
+            <button class="clear-btn" onclick="clearDisplay()">C</button>
+        </div>
+    </div>
+
+    <script>
+        let currentValue = "";
+        let operator = "";
+        let firstValue = "";
+
+        function appendNumber(num) {
+            currentValue += num;
+            document.getElementById("display").value = currentValue;
+        }
+        function setOperator(op) {
+            if (currentValue === "") return;
+            firstValue = currentValue;
+            operator = op;
+            currentValue = "";
+        }
+        function calculate() {
+            let secondValue = currentValue;
+            let result;
+
+            if (operator === "+") result = Number(firstValue) + Number(secondValue);
+            if (operator === "-") result = Number(firstValue) - Number(secondValue);
+            if (operator === "*") result = Number(firstValue) * Number(secondValue);
+            if (operator === "/") result = Number(firstValue) / Number(secondValue);
+
+            document.getElementById("display").value = result;
+            currentValue = result;
+            operator = "";
+        }
+        function clearDisplay() {
+            currentValue = "";
+            firstValue = "";
+            operator = "";
+            document.getElementById("display").value = "";
+        }
+    </script>
+</body>
+</html>
