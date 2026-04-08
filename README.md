@@ -1,2 +1,2 @@
-# calculator
+# index
 stylish calculator
